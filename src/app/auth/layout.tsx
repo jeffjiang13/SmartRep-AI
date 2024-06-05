@@ -17,7 +17,7 @@ const Layout = async ({ children }: Props) => {
       <div className="w-[600px] ld:w-full flex flex-col items-start p-6">
       <div className="flex items-center justify-center self-stretch my-auto text-2xl tracking-tighter text-neutral-700">
         <Link href="/" className="flex items-center -ml-3">
-          <Image src="/logo.png" width={55} height={55} alt="logo" />
+          <Image src="/logo.png" width={60} height={60} alt="logo" />
           <span className="text-xl font-bold -ml-3">
             Smart<span className="text-orange">Rep</span> AI
           </span>
