@@ -30,14 +30,15 @@ export const onCompleteUserRegistration = async (
       return { status: 200, user: registered }
     }
   } catch (error) {
-    return { status: 400 }
+    console.error('Registration error:', error)
+    return { status: 400, message: 'Error completing registration' }
   }
 }
 
 export const onLoginUser = async () => {
   const user = await currentUser()
   if (!user) {
-    redirectToSignIn({ returnBackUrl: `${process.env.NEXT_PUBLIC_URL}dashboard` }) // Provide an absolute URL here
+    redirectToSignIn()
     return { status: 401, message: 'User not authenticated' }
   }
   try {
@@ -54,9 +55,11 @@ export const onLoginUser = async () => {
     if (authenticated) {
       const domains = await onGetAllAccountDomains()
       return { status: 200, user: authenticated, domain: domains?.domains }
+    } else {
+      return { status: 404, message: 'User not found' }
     }
-    return { status: 401, message: 'User not found' }
   } catch (error) {
-    return { status: 400, message: 'An error occurred' }
+    console.error('Login error:', error)
+    return { status: 400, message: 'Error logging in user' }
   }
 }
