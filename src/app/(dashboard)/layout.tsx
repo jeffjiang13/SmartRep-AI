@@ -2,6 +2,7 @@ import { onLoginUser } from '@/actions/auth'
 import SideBar from '@/components/sidebar'
 import { ChatProvider } from '@/context/user-chat-context'
 import React from 'react'
+import { NextResponse } from 'next/server'
 
 type Props = {
   children: React.ReactNode
@@ -11,8 +12,9 @@ const OwnerLayout = async ({ children }: Props) => {
   const response = await onLoginUser()
 
   // Check if the response has a user and domain property
-  if ('user' in response && 'domain' in response) {
+  if (response && response.status === 200 && 'user' in response && 'domain' in response) {
     const authenticated = response as {
+      status: number
       user: {
         id: string
         fullname: string
@@ -43,8 +45,8 @@ const OwnerLayout = async ({ children }: Props) => {
     )
   }
 
-  // Return null or an appropriate fallback if the user is not authenticated
-  return null
+  // Return a fallback UI or redirect to a login page if the user is not authenticated
+  return NextResponse.redirect('/login') // Adjust the path as needed
 }
 
 export default OwnerLayout

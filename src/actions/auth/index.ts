@@ -40,7 +40,7 @@ export const onLoginUser = async () => {
   const user = await currentUser()
   if (!user) {
     // Construct the absolute URL for returnBackUrl
-    const returnBackUrl = `${process.env.NEXT_PUBLIC_URL}/sign-in`
+    const returnBackUrl = `${process.env.NEXT_PUBLIC_URL}sign-in`
     redirectToSignIn({ returnBackUrl })
     return NextResponse.json({ status: 401, message: 'User not authenticated' })
   }
