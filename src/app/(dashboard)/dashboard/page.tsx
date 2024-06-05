@@ -1,6 +1,3 @@
-'use client'
-
-import React, { useEffect, useState } from 'react'
 import { getUserAppointments } from '@/actions/appointment'
 import {
   getUserBalance,
@@ -14,43 +11,21 @@ import { PlanUsage } from '@/components/dashboard/plan-usage'
 import InfoBar from '@/components/infobar'
 import { Separator } from '@/components/ui/separator'
 import CalIcon from '@/icons/cal-icon'
-import { DollarSign } from 'lucide-react'
+import EmailIcon from '@/icons/email-icon'
 import PersonIcon from '@/icons/person-icon'
 import { TransactionsIcon } from '@/icons/transactions-icon'
+import { DollarSign } from 'lucide-react'
+import React from 'react'
 
-const DashboardPage = () => {
-  const [clients, setClients] = useState<number | null>(null)
-  const [sales, setSales] = useState<number | null>(null)
-  const [bookings, setBookings] = useState<number | null>(null)
-  const [planInfo, setPlanInfo] = useState<{ plan: 'STANDARD' | 'PRO' | 'ULTIMATE'; credits: number; domains: number } | null>(null)
-  const [transactions, setTransactions] = useState<any[]>([])
-  const [products, setProducts] = useState<number | null>(null)
+type Props = {}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const clientsData = await getUserClients()
-      const salesData = await getUserBalance()
-      const bookingsData = await getUserAppointments()
-      const planData = await getUserPlanInfo()
-      const transactionsData = await getUserTransactions()
-      const productsData = await getUserTotalProductPrices()
-
-      setClients(clientsData ?? null)
-      setSales(salesData ?? null)
-      setBookings(bookingsData ?? null)
-
-      if (planData && planData.plan && ['STANDARD', 'PRO', 'ULTIMATE'].includes(planData.plan)) {
-        setPlanInfo(planData as { plan: 'STANDARD' | 'PRO' | 'ULTIMATE'; credits: number; domains: number })
-      } else {
-        setPlanInfo({ plan: 'STANDARD', credits: 0, domains: 0 })
-      }
-
-      setTransactions(transactionsData?.data || [])
-      setProducts(productsData ?? null)
-    }
-
-    fetchData()
-  }, [])
+const Page = async (props: Props) => {
+  const clients = await getUserClients()
+  const sales = await getUserBalance()
+  const bookings = await getUserAppointments()
+  const plan = await getUserPlanInfo()
+  const transactions = await getUserTransactions()
+  const products = await getUserTotalProductPrices()
 
   return (
     <>
@@ -63,7 +38,7 @@ const DashboardPage = () => {
             icon={<PersonIcon />}
           />
           <DashboardCard
-            value={(products || 0) * (clients || 0)}
+            value={products! * clients! || 0}
             sales
             title="Pipeline Value"
             icon={<DollarSign />}
@@ -89,9 +64,9 @@ const DashboardPage = () => {
               </p>
             </div>
             <PlanUsage
-              plan={planInfo?.plan || 'STANDARD'}
-              credits={planInfo?.credits || 0}
-              domains={planInfo?.domains || 0}
+              plan={plan?.plan!}
+              credits={plan?.credits || 0}
+              domains={plan?.domains || 0}
               clients={clients || 0}
             />
           </div>
@@ -104,19 +79,20 @@ const DashboardPage = () => {
               <p className="text-sm cursor-pointer">See more</p>
             </div>
             <Separator orientation="horizontal" />
-            {transactions.map((transaction) => (
-              <div
-                className="flex flex-col sm:flex-row gap-3 w-full justify-between items-center border-b-2 py-5"
-                key={transaction.id}
-              >
-                <p className="font-bold text-center sm:text-left">
-                  {transaction.calculated_statement_descriptor}
-                </p>
-                <p className="font-bold text-xl text-center sm:text-right">
-                  ${transaction.amount / 100}
-                </p>
-              </div>
-            ))}
+            {transactions &&
+              transactions.data.map((transaction) => (
+                <div
+                  className="flex flex-col sm:flex-row gap-3 w-full justify-between items-center border-b-2 py-5"
+                  key={transaction.id}
+                >
+                  <p className="font-bold text-center sm:text-left">
+                    {transaction.calculated_statement_descriptor}
+                  </p>
+                  <p className="font-bold text-xl text-center sm:text-right">
+                    ${transaction.amount / 100}
+                  </p>
+                </div>
+              ))}
           </div>
         </div>
       </div>
@@ -124,4 +100,4 @@ const DashboardPage = () => {
   )
 }
 
-export default DashboardPage
+export default Page

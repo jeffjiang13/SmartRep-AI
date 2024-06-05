@@ -3,7 +3,6 @@
 import { client } from '@/lib/prisma'
 import { currentUser, redirectToSignIn } from '@clerk/nextjs'
 import { onGetAllAccountDomains } from '../settings'
-import { NextResponse } from 'next/server'
 
 export const onCompleteUserRegistration = async (
   fullname: string,
@@ -39,10 +38,8 @@ export const onCompleteUserRegistration = async (
 export const onLoginUser = async () => {
   const user = await currentUser()
   if (!user) {
-    // Construct the absolute URL for returnBackUrl
-    const returnBackUrl = `${process.env.NEXT_PUBLIC_URL}sign-in`
-    redirectToSignIn({ returnBackUrl })
-    return NextResponse.json({ status: 401, message: 'User not authenticated' })
+    redirectToSignIn()
+    return { status: 401, message: 'User not authenticated' }
   }
   try {
     const authenticated = await client.user.findUnique({
@@ -57,16 +54,12 @@ export const onLoginUser = async () => {
     })
     if (authenticated) {
       const domains = await onGetAllAccountDomains()
-      return NextResponse.json({
-        status: 200,
-        user: authenticated,
-        domain: domains?.domains,
-      })
+      return { status: 200, user: authenticated, domain: domains?.domains }
     } else {
-      return NextResponse.json({ status: 404, message: 'User not found' })
+      return { status: 404, message: 'User not found' }
     }
   } catch (error) {
     console.error('Login error:', error)
-    return NextResponse.json({ status: 400, message: 'Error logging in user' })
+    return { status: 400, message: 'Error logging in user' }
   }
 }
