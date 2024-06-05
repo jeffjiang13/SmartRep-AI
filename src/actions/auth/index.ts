@@ -57,7 +57,11 @@ export const onLoginUser = async () => {
     })
     if (authenticated) {
       const domains = await onGetAllAccountDomains()
-      return NextResponse.json({ status: 200, user: authenticated, domain: domains?.domains })
+      return NextResponse.json({
+        status: 200,
+        user: authenticated,
+        domain: domains?.domains,
+      })
     } else {
       return NextResponse.json({ status: 404, message: 'User not found' })
     }
