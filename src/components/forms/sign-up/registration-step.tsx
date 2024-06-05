@@ -8,12 +8,12 @@ import { Spinner } from '@/components/spinner'
 
 const DetailForm = dynamic(() => import('./account-details-form'), {
   ssr: false,
-  loading: Spinner,
+  loading: () => <Spinner noPadding={true} />, // Use an anonymous function
 })
 
 const OTPForm = dynamic(() => import('./otp-form'), {
   ssr: false,
-  loading: Spinner,
+  loading: () => <Spinner noPadding={true} />, // Use an anonymous function
 })
 
 type Props = {}
