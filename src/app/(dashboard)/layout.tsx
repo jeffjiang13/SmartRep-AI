@@ -8,43 +8,19 @@ type Props = {
 }
 
 const OwnerLayout = async ({ children }: Props) => {
-  const response = await onLoginUser()
+  const authenticated = await onLoginUser()
+  if (!authenticated) return null
 
-  // Check if the response has a user and domain property
-  if (response.status === 200 && 'user' in response && 'domain' in response) {
-    const authenticated = response as {
-      user: {
-        id: string
-        fullname: string
-        type: string
-      }
-      domain: {
-        customer: {
-          chatRoom: {
-            id: string
-            live: boolean
-          }[]
-        }[]
-        id: string
-        name: string
-        icon: string
-      }[] | undefined
-    }
-
-    return (
-      <ChatProvider>
-        <div className="flex h-screen w-full">
-          <SideBar domains={authenticated.domain} />
-          <div className="w-full h-screen flex flex-col pl-[4rem] md:pl-4">
-            {children}
-          </div>
+  return (
+    <ChatProvider>
+      <div className="flex h-screen w-full">
+        <SideBar domains={authenticated.domain} />
+        <div className="w-full h-screen flex flex-col pl-[4rem] md:pl-4">
+          {children}
         </div>
-      </ChatProvider>
-    )
-  }
-
-  // Return null or an appropriate fallback if the user is not authenticated
-  return null
+      </div>
+    </ChatProvider>
+  )
 }
 
 export default OwnerLayout
