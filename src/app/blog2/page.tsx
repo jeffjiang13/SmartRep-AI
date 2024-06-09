@@ -8,7 +8,6 @@ import { blogPosts } from '@/constants/blog-posts'
 import Image from 'next/image'
 const Blog = () => {
   const post = blogPosts.find(post => post.id === 'blog2')
-  console.log(post)
   if (!post) return <div className='justify-center text-center text-2xl'>Post not found</div>
 
   const createdAt = new Date(post.createdAt)
