@@ -100,11 +100,11 @@ export default async function Home() {
             </div>
             <div className="feature-card bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-2xl font-semibold mb-2">🏷️ White-Labeling Options</h3>
-              <p className="text-gray-600">Customize the chatbot to match your brand's identity.</p>
+              <p className="text-gray-600">Customize the chatbot to match your brand&apos;s identity.</p>
             </div>
             <div className="feature-card bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-2xl font-semibold mb-2">🎨 Customizable Interface</h3>
-              <p className="text-gray-600">Modify the look and feel of the chatbot to suit your website's design.</p>
+              <p className="text-gray-600">Modify the look and feel of the chatbot to suit your website&apos;s design.</p>
             </div>
             <div className="feature-card bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-2xl font-semibold mb-2">🗓️ Calendar Widget</h3>
@@ -136,7 +136,7 @@ export default async function Home() {
             </div>
             <div className="feature-card bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-2xl font-semibold mb-2">🔍 SEO Optimized Blogging</h3>
-              <p className="text-gray-600">Improve your site's search engine ranking with SEO-friendly blog posts.</p>
+              <p className="text-gray-600">Improve your site&apos;s search engine ranking with SEO-friendly blog posts.</p>
             </div>
             <div className="feature-card bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-2xl font-semibold mb-2">🏗️ Improved Architecture</h3>
