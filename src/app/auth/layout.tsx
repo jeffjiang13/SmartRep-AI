@@ -14,7 +14,7 @@ const Layout = async ({ children }: Props) => {
 
   return (
     <div className="h-screen flex w-full justify-center">
-      <div className="w-[600px] ld:w-full flex flex-col items-start p-6">
+      <div className="w-[600px] ld:w-full flex flex-col items-start p-6 bg-cream">
       <div className="flex items-center justify-center self-stretch my-auto text-2xl tracking-tighter text-neutral-700">
         <Link href="/" className="flex items-center -ml-3">
           <Image src="/logo.png" width={60} height={60} alt="logo" />
@@ -25,7 +25,7 @@ const Layout = async ({ children }: Props) => {
       </div>
         {children}
       </div>
-      <div className="hidden lg:flex flex-1 w-full max-h-full max-w-4000px overflow-hidden relative bg-cream  flex-col pt-10 pl-24 gap-3">
+      <div className="hidden lg:flex flex-1 w-full max-h-full max-w-4000px overflow-hidden relative bg-white flex-col pt-10 pl-24 gap-3">
         <h2 className="text-gravel md:text-4xl font-bold">
           Hi, I’m your AI powered sales assistant, SmartRep!
         </h2>

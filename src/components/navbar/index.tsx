@@ -16,10 +16,10 @@ function NavBar() {
         </Link>
       </div>
       <ul className="gap-5 font-semibold justify-between self-stretch my-auto text-sm leading-5 text-neutral-700 max-md:flex-wrap max-md:max-w-full hidden md:flex">
-        <Link className='hover:text-yellow-300' href=""><li>Pricing</li></Link>
-        <Link className='hover:text-yellow-300' href=""><li>News Room</li></Link>
-        <Link className='hover:text-yellow-300' href=""><li>Features</li></Link>
-        <Link className='hover:text-yellow-300' href=""><li>Contact us</li></Link>
+        <Link className='hover:text-yellow-300' href="#pricing"><li>Pricing</li></Link>
+        <Link className='hover:text-yellow-300' href="#news"><li>News Room</li></Link>
+        <Link className='hover:text-yellow-300' href="#features"><li>Features</li></Link>
+        <Link className='hover:text-yellow-300' href="#contact"><li>Contact us</li></Link>
       </ul>
       <aside className="flex gap-2 items-center">
         <SignedIn>
