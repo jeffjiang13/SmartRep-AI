@@ -9,7 +9,7 @@ export const pricingCards = [
     priceId: 'price_1PNi6kLYxfnvupdnjKgaKTIs',
   },
   {
-    title: 'Plus',
+    title: 'Pro',
     description: 'For serious agency owners',
     price: '$67',
     duration: 'month',

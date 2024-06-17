@@ -178,7 +178,7 @@ export default async function Home() {
             key={card.title}
             className={clsx('w-[300px] flex flex-col justify-between', {
               'border-2 border-orange': card.title === 'Ultimate',
-              'border-2 border-yellow-300': card.title === 'Plus',
+              'border-2 border-yellow-300': card.title === 'Pro',
 
             })}
           >
