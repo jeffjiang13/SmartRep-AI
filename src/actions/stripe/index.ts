@@ -48,7 +48,7 @@ export const onUpdateSubscription = async (
           update: {
             data: {
               plan,
-              credits: plan == 'PRO' ? 50 : plan == 'ULTIMATE' ? 500 : 10,
+              credits: plan == 'PRO' ? 100 : plan == 'ULTIMATE' ? 500 : 10,
             },
           },
         },

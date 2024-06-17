@@ -33,7 +33,7 @@ const CodeSnippet = ({ id }: Props) => {
     document.body.appendChild(iframe)
 
     window.addEventListener("message", (e) => {
-        if(e.origin !== ${process.env.URL}) return null
+        if(e.origin !== ${process.env.NEXT_PUBLIC_URL}) return null
         let dimensions = JSON.parse(e.data)
         iframe.width = dimensions.width
         iframe.height = dimensions.height
