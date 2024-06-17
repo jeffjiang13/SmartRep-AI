@@ -79,7 +79,7 @@ const FilterQuestions = ({ id }: Props) => {
               </p>
             ))
           ) : (
-            <CardDescription>No Questions</CardDescription>
+            <CardDescription>No questions</CardDescription>
           )}
         </Loader>
       </CardContent>

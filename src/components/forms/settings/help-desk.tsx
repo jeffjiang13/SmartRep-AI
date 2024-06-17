@@ -79,7 +79,7 @@ const HelpDesk = ({ id }: Props) => {
               />
             ))
           ) : (
-            <CardDescription>No Questions to show</CardDescription>
+            <CardDescription>No questions to show</CardDescription>
           )}
         </Loader>
       </CardContent>
