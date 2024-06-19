@@ -144,12 +144,12 @@ export const useSettings = (id: string) => {
     setDeleting(true)
     const deleted = await onDeleteUserDomain(id)
     if (deleted) {
+      router.push('/dashboard')
       toast({
         title: 'Success',
         description: deleted.message,
       })
       setDeleting(false)
-      router.push('/dashboard')
       router.refresh()
     }
   }
