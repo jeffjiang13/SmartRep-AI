@@ -184,6 +184,8 @@ export const onGetCurrentDomainInfo = async (domain: string) => {
                 id: true,
                 welcomeMessage: true,
                 icon: true,
+                background: true,
+                textColor: true
               },
             },
           },
@@ -241,7 +243,7 @@ export const onUpdateDomain = async (id: string, name: string) => {
   }
 }
 
-export const onChatBotImageUpdate = async (id: string, icon: string) => {
+export const onChatBotImageUpdate = async (id: string, icon: string, background: string | undefined, textColor: string | undefined) => {
   const user = await currentUser()
 
   if (!user) return
@@ -256,6 +258,8 @@ export const onChatBotImageUpdate = async (id: string, icon: string) => {
           update: {
             data: {
               icon,
+              background,
+              textColor
             },
           },
         },

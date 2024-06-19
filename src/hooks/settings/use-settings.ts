@@ -94,6 +94,7 @@ export const useSettings = (id: string) => {
 
   const onUpdateSettings = handleSubmit(async (values) => {
     setLoading(true)
+
     if (values.domain) {
       const domain = await onUpdateDomain(id, values.domain)
       if (domain) {
@@ -103,17 +104,26 @@ export const useSettings = (id: string) => {
         })
       }
     }
-    if (values.image[0]) {
+
+    let uploadedImageId: string | undefined = undefined
+    if (values.image && values.image[0]) {
       const uploaded = await upload.uploadFile(values.image[0])
-      const image = await onChatBotImageUpdate(id, uploaded.uuid)
-      if (image) {
-        toast({
-          title: image.status == 200 ? 'Success' : 'Error',
-          description: image.message,
-        })
-        setLoading(false)
-      }
+      uploadedImageId = uploaded.uuid
     }
+
+    const image = await onChatBotImageUpdate(
+      id,
+      uploadedImageId ?? '',
+      values.background,
+      values.textColor
+    )
+    if (image) {
+      toast({
+        title: image.status == 200 ? 'Success' : 'Error',
+        description: image.message,
+      })
+    }
+
     if (values.welcomeMessage) {
       const message = await onUpdateWelcomeMessage(values.welcomeMessage, id)
       if (message) {
@@ -123,10 +133,12 @@ export const useSettings = (id: string) => {
         })
       }
     }
+
     reset()
     router.refresh()
     setLoading(false)
   })
+
 
   const onDeleteDomain = async () => {
     setDeleting(true)

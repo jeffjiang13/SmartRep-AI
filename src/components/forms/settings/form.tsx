@@ -25,6 +25,8 @@ type Props = {
   chatBot: {
     id: string
     icon: string | null
+    background: string | null
+    textColor: string | null
     welcomeMessage: string | null
   } | null
 }
@@ -38,6 +40,7 @@ const SettingsForm = ({ id, name, chatBot, plan }: Props) => {
     deleting,
     loading,
   } = useSettings(id)
+
   return (
     <form
       className="flex flex-col gap-8 pb-10"
