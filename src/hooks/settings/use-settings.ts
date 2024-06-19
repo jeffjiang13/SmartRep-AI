@@ -149,6 +149,7 @@ export const useSettings = (id: string) => {
         description: deleted.message,
       })
       setDeleting(false)
+      router.push('/dashboard')
       router.refresh()
     }
   }
