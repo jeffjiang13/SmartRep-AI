@@ -9,18 +9,19 @@ type Props = {
   register: UseFormRegister<any>
   errors: FieldErrors<FieldValues>
   label: string
+  required?: boolean
 }
 
-const UploadButton = ({ errors, label, register }: Props) => {
+const UploadButton = ({ errors, label, register, required }: Props) => {
   return (
     <>
-      <div className="felx gap-2 items-center">
+      <div className="flex gap-2 items-center">
         <Label
           htmlFor="upload-button"
           className="flex gap-2 p-3 rounded-lg bg-cream text-gray-600 cursor-pointer font-semibold text-sm items-center"
         >
           <Input
-            {...register('image')}
+            {...register('image', { required: required && 'Image is required' })}
             className="hidden"
             type="file"
             id="upload-button"
@@ -37,7 +38,7 @@ const UploadButton = ({ errors, label, register }: Props) => {
         name="image"
         render={({ message }) => (
           <p className="text-red-400 mt-2">
-            {message === 'Required' ? '' : message}
+            {message}
           </p>
         )}
       />

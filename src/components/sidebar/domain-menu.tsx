@@ -56,7 +56,8 @@ const DomainMenu = ({ domains, min }: Props) => {
                 register={register}
                 label="Upload Icon"
                 errors={errors}
-              />
+                required={true}
+                />
               <Button
                 type="submit"
                 className="w-full hover:bg-orange"
@@ -75,16 +76,19 @@ const DomainMenu = ({ domains, min }: Props) => {
               key={domain.id}
               className={cn(
                 'flex gap-3 hover:bg-white rounded-full transition duration-100 ease-in-out cursor-pointer items-center',
-                !min ? 'p-2' : 'py-2', min ? 'justify-center' : 'justify-start',
+                !min ? 'p-2' : 'py-2',
+                min ? 'justify-center' : 'justify-start',
                 domain.name.split('.')[0] == isDomain && 'bg-white'
               )}
             >
-              <Image
-                src={`https://ucarecdn.com/${domain.icon}/`}
-                alt="logo"
-                width={20}
-                height={20}
-              />
+              {domain.icon && (
+                <Image
+                  src={`https://ucarecdn.com/${domain.icon}/`}
+                  alt="logo"
+                  width={20}
+                  height={20}
+                />
+              )}
               {!min && <p className="text-sm">{domain.name}</p>}
             </Link>
           ))}
