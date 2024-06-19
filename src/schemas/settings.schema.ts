@@ -18,7 +18,7 @@ export type HelpDeskQuestionsProps = {
 
 export type AddProductProps = {
   name: string;
-  image: any;
+  image?: any;
   price: string;
 };
 
@@ -37,10 +37,20 @@ export const AddDomainSchema = z.object({
     ),
   image: z
     .any()
-    .refine((files) => files?.[0]?.size <= MAX_UPLOAD_SIZE, {
+    .refine((files) => {
+      if (files && files.length > 0) {
+        return files[0].size <= MAX_UPLOAD_SIZE;
+      }
+      return true;
+    }, {
       message: 'Your file size must be less than 2MB',
     })
-    .refine((files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type), {
+    .refine((files) => {
+      if (files && files.length > 0) {
+        return ACCEPTED_FILE_TYPES.includes(files[0].type);
+      }
+      return true;
+    }, {
       message: 'Only JPG, JPEG & PNG are accepted file formats',
     }),
 });
@@ -75,16 +85,12 @@ export const DomainSettingsSchema = z
   .refine(
     (schema) => {
       if (schema.image?.length) {
-        if (
-          ACCEPTED_FILE_TYPES.includes(schema.image?.[0].type!) &&
-          schema.image?.[0].size <= MAX_UPLOAD_SIZE
-        ) {
-          return true;
-        }
+        const file = schema.image[0];
+        return (
+          ACCEPTED_FILE_TYPES.includes(file.type) && file.size <= MAX_UPLOAD_SIZE
+        );
       }
-      if (!schema.image?.length) {
-        return true;
-      }
+      return true;
     },
     {
       message:
@@ -108,10 +114,20 @@ export const AddProductSchema = z.object({
     .min(3, { message: 'The name must have at least 3 characters' }),
   image: z
     .any()
-    .refine((files) => files?.[0]?.size <= MAX_UPLOAD_SIZE, {
+    .refine((files) => {
+      if (files && files.length > 0) {
+        return files[0].size <= MAX_UPLOAD_SIZE;
+      }
+      return true;
+    }, {
       message: 'Your file size must be less than 2MB',
     })
-    .refine((files) => ACCEPTED_FILE_TYPES.includes(files?.[0]?.type), {
+    .refine((files) => {
+      if (files && files.length > 0) {
+        return ACCEPTED_FILE_TYPES.includes(files[0].type);
+      }
+      return true;
+    }, {
       message: 'Only JPG, JPEG & PNG are accepted file formats',
     }),
   price: z.string(),
