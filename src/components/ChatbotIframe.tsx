@@ -25,19 +25,19 @@ const ChatbotIframe = () => {
       }
     `);
 
-    iframe.src = "http://localhost:3000/chatbot";
+    iframe.src = "https://jj-smartrep.vercel.app/chatbot";
     iframe.classList.add('chat-frame');
     document.body.appendChild(iframe);
 
     const handleMessage = (e: MessageEvent) => {
-      if (e.origin !== "http://localhost:3000") return;
+      if (e.origin !== "https://jj-smartrep.vercel.app") return;
 
       if (typeof e.data === 'string' && e.data.startsWith('{')) {
         try {
           const dimensions = JSON.parse(e.data);
           iframe.style.width = `${dimensions.width}px`;
           iframe.style.height = `${dimensions.height}px`;
-          iframe.contentWindow?.postMessage("2531aab1-1ea1-446e-8e7e-bedf41ad9021", "http://localhost:3000/");
+          iframe.contentWindow?.postMessage("2531aab1-1ea1-446e-8e7e-bedf41ad9021", "https://jj-smartrep.vercel.app/");
         } catch (error) {
           console.error('Error parsing message data:', e.data, error);
         }
