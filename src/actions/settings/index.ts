@@ -242,7 +242,27 @@ export const onUpdateDomain = async (id: string, name: string) => {
     console.log(error)
   }
 }
+export const getChatBotByDomainId = async (domainId: string) => {
+  const user = await currentUser();
 
+  if (!user) return null;
+
+  try {
+    const domain = await client.domain.findUnique({
+      where: {
+        id: domainId,
+      },
+      select: {
+        chatBot: true,
+      },
+    });
+
+    return domain?.chatBot || null;
+  } catch (error) {
+    console.error('Error fetching chatBot:', error);
+    return null;
+  }
+};
 export const onChatBotImageUpdate = async (id: string, icon: string, background: string | undefined, textColor: string | undefined) => {
   const user = await currentUser()
 

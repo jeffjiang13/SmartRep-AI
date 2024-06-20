@@ -1,31 +1,38 @@
-import Section from '@/components/section-label'
-import UploadButton from '@/components/upload-button'
-import { BotIcon } from '@/icons/bot-icon'
-
-import Image from 'next/image'
-import React, { useState, useEffect } from 'react'
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
+import Section from '@/components/section-label';
+import UploadButton from '@/components/upload-button';
+import { BotIcon } from '@/icons/bot-icon';
+import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 
 type Props = {
-  register: UseFormRegister<FieldValues>
-  errors: FieldErrors<FieldValues>
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
   chatBot: {
-    id: string
-    icon: string | null
-    background: string | null
-    textColor: string | null
-    welcomeMessage: string | null
-  } | null
-}
+    id: string;
+    icon: string | null;
+    background: string | null;
+    textColor: string | null;
+    welcomeMessage: string | null;
+  } | null;
+};
 
 const EditChatbotIcon = ({ register, errors, chatBot }: Props) => {
-  const [textColor, setTextColor] = useState(chatBot?.textColor || '#FFFFFF')
-  const [background, setBackground] = useState(chatBot?.background || '#FFD700')
+  const [textColor, setTextColor] = useState(chatBot?.textColor || '#000000');
+  const [background, setBackground] = useState(chatBot?.background || '#ffffff');
 
   useEffect(() => {
-    register('textColor', { value: textColor })
-    register('background', { value: background })
-  }, [register, textColor, background])
+    register('textColor', { value: textColor });
+    register('background', { value: background });
+  }, [register]);
+
+  useEffect(() => {
+    register('textColor').onChange({ target: { name: 'textColor', value: textColor } });
+  }, [textColor, register]);
+
+  useEffect(() => {
+    register('background').onChange({ target: { name: 'background', value: background } });
+  }, [background, register]);
 
   return (
     <div className="py-5 flex flex-col gap-5 items-start">
@@ -49,10 +56,12 @@ const EditChatbotIcon = ({ register, errors, chatBot }: Props) => {
         </div>
       ) : (
         <div
-          className="cursor-pointer shadow-md w-20 h-20 flex items-center justify-center rounded-full"
-          style={{ backgroundColor: background }}
+          className="cursor-pointer shadow-md w-20 h-20 flex items-center justify-center rounded-full bg-grandis"
+          // style={{ backgroundColor: background }}
         >
-          <BotIcon textColor={textColor} />
+          <BotIcon
+            // textColor={textColor}
+          />
         </div>
       )}
       <div className="flex flex-col gap-2">
@@ -61,12 +70,7 @@ const EditChatbotIcon = ({ register, errors, chatBot }: Props) => {
           <input
             type="color"
             value={textColor}
-            onChange={(e) => {
-              setTextColor(e.target.value)
-            }}
-            onBlur={() => {
-              register('textColor').onChange({ target: { name: 'textColor', value: textColor } })
-            }}
+            onChange={(e) => setTextColor(e.target.value)}
             className="ml-2"
           />
         </label>
@@ -75,18 +79,13 @@ const EditChatbotIcon = ({ register, errors, chatBot }: Props) => {
           <input
             type="color"
             value={background}
-            onChange={(e) => {
-              setBackground(e.target.value)
-            }}
-            onBlur={() => {
-              register('background').onChange({ target: { name: 'background', value: background } })
-            }}
+            onChange={(e) => setBackground(e.target.value)}
             className="ml-2"
           />
         </label>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditChatbotIcon
+export default EditChatbotIcon;

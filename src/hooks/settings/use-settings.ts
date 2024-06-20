@@ -9,6 +9,8 @@ import {
   onUpdateDomain,
   onUpdatePassword,
   onUpdateWelcomeMessage,
+  getChatBotByDomainId,
+
 } from '@/actions/settings'
 import { useToast } from '@/components/ui/use-toast'
 import {
@@ -86,58 +88,61 @@ export const useSettings = (id: string) => {
     reset,
   } = useForm<DomainSettingsProps>({
     resolver: zodResolver(DomainSettingsSchema),
-  })
-  const router = useRouter()
-  const { toast } = useToast()
-  const [loading, setLoading] = useState<boolean>(false)
-  const [deleting, setDeleting] = useState<boolean>(false)
+  });
+  const router = useRouter();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [deleting, setDeleting] = useState<boolean>(false);
 
   const onUpdateSettings = handleSubmit(async (values) => {
-    setLoading(true)
+    setLoading(true);
 
-    if (values.domain) {
-      const domain = await onUpdateDomain(id, values.domain)
-      if (domain) {
-        toast({
-          title: 'Success',
-          description: domain.message,
-        })
-      }
-    }
-
-    let uploadedImageId: string | undefined = undefined
+    let uploadedImageId: string | undefined = undefined;
     if (values.image && values.image[0]) {
-      const uploaded = await upload.uploadFile(values.image[0])
-      uploadedImageId = uploaded.uuid
+      const uploaded = await upload.uploadFile(values.image[0]);
+      uploadedImageId = uploaded.uuid;
     }
+
+    const currentChatBot = await getChatBotByDomainId(id);
+    const currentIcon = currentChatBot?.icon || '';
 
     const image = await onChatBotImageUpdate(
       id,
-      uploadedImageId ?? '',
-      values.background,
-      values.textColor
-    )
+      uploadedImageId ?? currentIcon,
+      values.background ?? currentChatBot?.background ?? '',
+      values.textColor ?? currentChatBot?.textColor ?? ''
+    );
     if (image) {
       toast({
         title: image.status == 200 ? 'Success' : 'Error',
         description: image.message,
-      })
+      });
     }
 
     if (values.welcomeMessage) {
-      const message = await onUpdateWelcomeMessage(values.welcomeMessage, id)
+      const message = await onUpdateWelcomeMessage(values.welcomeMessage, id);
       if (message) {
         toast({
           title: 'Success',
           description: message.message,
-        })
+        });
       }
     }
 
-    reset()
-    router.refresh()
-    setLoading(false)
-  })
+    if (values.domain) {
+      const domain = await onUpdateDomain(id, values.domain);
+      if (domain) {
+        toast({
+          title: 'Success',
+          description: domain.message,
+        });
+      }
+    }
+
+    reset();
+    router.refresh();
+    setLoading(false);
+  });
 
 
   const onDeleteDomain = async () => {
