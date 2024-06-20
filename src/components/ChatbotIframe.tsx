@@ -3,13 +3,12 @@ import React, { useEffect } from 'react';
 
 const ChatbotIframe = () => {
   useEffect(() => {
-    // Check if an existing iframe with the class 'chat-frame' already exists
     const existingIframe = document.querySelector('.chat-frame');
     if (existingIframe) return;
 
     const iframe = document.createElement("iframe");
 
-    const iframeStyles = (styleString: string) => {
+    const iframeStyles = (styleString:any) => {
       const style = document.createElement('style');
       style.textContent = styleString;
       document.head.append(style);
@@ -21,7 +20,7 @@ const ChatbotIframe = () => {
         bottom: 20px;
         right: 20px;
         border: none;
-        z-index: 2147483647; /* Maximum z-index value to ensure it's on top */
+        z-index: 999999;
       }
     `);
 
@@ -29,33 +28,29 @@ const ChatbotIframe = () => {
     iframe.classList.add('chat-frame');
     document.body.appendChild(iframe);
 
-    const handleMessage = (e: MessageEvent) => {
-      if (e.origin !== "https://jj-smartrep.vercel.app") return;
-
-      if (typeof e.data === 'string' && e.data.startsWith('{')) {
-        try {
-          const dimensions = JSON.parse(e.data);
-          iframe.style.width = `${dimensions.width}px`;
-          iframe.style.height = `${dimensions.height}px`;
-          iframe.contentWindow?.postMessage("2531aab1-1ea1-446e-8e7e-bedf41ad9021", "https://jj-smartrep.vercel.app/");
-        } catch (error) {
-          console.error('Error parsing message data:', e.data, error);
-        }
-      } else {
-        console.error('Unexpected message data:', e.data);
+    const handleMessage = (e:any) => {
+      if (e.origin !== "https://jj-smartrep.vercel.app") return null;
+      try {
+        const dimensions = JSON.parse(e.data);
+        iframe.style.width = dimensions.width + "px";
+        iframe.style.height = dimensions.height + "px";
+      } catch (error) {
+        console.error('Invalid message data:', e.data);
       }
+      iframe.contentWindow?.postMessage("2531aab1-1ea1-446e-8e7e-bedf41ad9021", "https://jj-smartrep.vercel.app/");
     };
 
     window.addEventListener("message", handleMessage);
 
-    // Cleanup the event listener and iframe on component unmount
     return () => {
       window.removeEventListener("message", handleMessage);
-      document.body.removeChild(iframe);
+      if (document.body.contains(iframe)) {
+        document.body.removeChild(iframe);
+      }
     };
   }, []);
 
-  return null; // This component does not render anything itself
+  return null;
 };
 
 export default ChatbotIframe;
