@@ -7,7 +7,9 @@ type BotIconProps = {
 
 export const BotIcon: React.FC<BotIconProps> = ({ textColor = 'white', background = 'transparent' }) => {
   return (
-    <div style={{ background, borderRadius: '50%', padding: '10px', display: 'inline-block' }}>
+    <div
+    // style={{ background, borderRadius: '50%', padding: '10px', display: 'inline-block' }}
+    >
       <svg
         width="47"
         height="47"
