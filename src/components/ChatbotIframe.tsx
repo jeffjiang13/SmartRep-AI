@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 
 const ChatbotIframe = () => {
   useEffect(() => {
-    // Ensure there's only one instance of the iframe
+    // Check if an existing iframe with the class 'chat-frame' already exists
     const existingIframe = document.querySelector('.chat-frame');
     if (existingIframe) return;
 
