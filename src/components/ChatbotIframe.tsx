@@ -3,6 +3,10 @@ import React, { useEffect } from 'react';
 
 const ChatbotIframe = () => {
   useEffect(() => {
+    // Ensure there's only one instance of the iframe
+    const existingIframe = document.querySelector('.chat-frame');
+    if (existingIframe) return;
+
     const iframe = document.createElement("iframe");
 
     const iframeStyles = (styleString: string) => {
@@ -26,20 +30,19 @@ const ChatbotIframe = () => {
     document.body.appendChild(iframe);
 
     const handleMessage = (e: MessageEvent) => {
-      if (e.origin !== "https://jj-smartrep.vercel.app") return null;
+      if (e.origin !== "https://jj-smartrep.vercel.app") return;
 
-      try {
-        const data = JSON.parse(e.data);
-
-        if (data && data.width && data.height) {
-          iframe.style.width = data.width + "px";
-          iframe.style.height = data.height + "px";
+      if (typeof e.data === 'string' && e.data.startsWith('{')) {
+        try {
+          const dimensions = JSON.parse(e.data);
+          iframe.style.width = `${dimensions.width}px`;
+          iframe.style.height = `${dimensions.height}px`;
           iframe.contentWindow?.postMessage("2531aab1-1ea1-446e-8e7e-bedf41ad9021", "https://jj-smartrep.vercel.app/");
-        } else {
-          console.error('Unexpected message data:', e.data);
+        } catch (error) {
+          console.error('Error parsing message data:', e.data, error);
         }
-      } catch (error) {
-        console.error('Error parsing message data:', e.data, error);
+      } else {
+        console.error('Unexpected message data:', e.data);
       }
     };
 
