@@ -45,7 +45,7 @@ const MaxMenu = ({ current, domains, onExpand, onSignOut }: Props) => {
           onClick={onExpand}
         />
       </div>
-      <div className="animate-fade-in opacity-0 delay-300 fill-mode-forwards flex flex-col justify-between h-full pt-10">
+      <div className="animate-fade-in opacity-0 delay-300 fill-mode-forwards flex flex-col justify-between h-full">
         <div className="flex flex-col justify-start">
           <p className="text-xs text-gray-500 mb-3">MENU</p>
           {SIDE_BAR_MENU.map((menu, key) => (
