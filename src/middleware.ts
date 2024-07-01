@@ -13,7 +13,8 @@ export default authMiddleware({
     '/blog3',
     '/blog4',
     '/blog5',
-    '/blog6'
+    '/blog6',
+    '/callback/stripe/success',
   ],
   ignoredRoutes: ['/chatbot'],
   afterAuth: (auth, req, evt) => {

@@ -45,7 +45,7 @@ export const onCompleteUserRegistration = async (
 export const onLoginUser = async () => {
   const user = await currentUser()
   if (!user) {
-    redirectToSignIn({ returnBackUrl: absoluteUrl('/sign-in') })
+    redirectToSignIn({ returnBackUrl: absoluteUrl('/auth/sign-in') })
     return { status: 401, message: 'User not authenticated' }
   }
 
