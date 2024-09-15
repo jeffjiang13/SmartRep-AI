@@ -6,7 +6,7 @@ export const Responding = () => {
     <div className="self-start flex items-end gap-3">
       <Avatar className="w-5 h-5">
         <AvatarImage
-          src="https://ucarecdn.com/372078a2-48f5-4700-ba0b-d06003d02a53/-/preview/512x512/"
+          src="https://ucarecdn.com/f6d9d407-a2da-4a2c-a177-241cc854b9c7/-/preview/512x512/"
           alt="@shadcn"
         />
         <AvatarFallback>CN</AvatarFallback>
