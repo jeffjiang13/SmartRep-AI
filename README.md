@@ -1,4 +1,13 @@
+<div align="center" id="top" className="mb-10">
+<img src="./public/logo.png" alt="icon" width="150" height="150" />
 
+&#xa0;
+
+  <img src="./public/assets/temp.png" alt="preview" />
+
+<a href="https://jj-smartrep.vercel.app/">Demo</a>
+
+</div>
 
 # SmartRep AI
 
