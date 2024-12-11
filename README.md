@@ -3,7 +3,7 @@
 
 &#xa0;
 
-  <img src="./public/assets/temp.png" alt="preview" />
+  <img src="./public/temp.png" alt="preview" />
 
 <a href="https://jj-smartrep.vercel.app/">Demo</a>
 
